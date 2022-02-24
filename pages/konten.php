@@ -5,7 +5,7 @@
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <img src="images/tekno.png" class="img-fluid" alt="logo">
+            <img src="images/logo.svg" class="img-fluid" alt="logo">
           </div>
         </div>
       </div>

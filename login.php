@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Sistem Informasi PT Marindo Utama | Login</title>
+  <title>Sistem Informasi Akuntansi | Login</title>
   <!-- base:css -->
   <link rel="stylesheet" href="vendors/typicons/typicons.css">
   <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
@@ -26,7 +26,7 @@
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="brand-logo">
-                <img src="images/tekno.png" alt="logo">
+                <img src="images/logo.svg" alt="logo">
               </div>
               <h6 class="font-weight-light">Sign in to continue.</h6>
               <form class="pt-3" name="form" id="loginF" method="post" action="loginproses.php">
