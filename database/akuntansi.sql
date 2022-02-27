@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 16 Jan 2022 pada 09.19
+-- Waktu pembuatan: 27 Feb 2022 pada 07.49
 -- Versi server: 8.0.22
 -- Versi PHP: 7.3.30
 
@@ -67,7 +67,8 @@ INSERT INTO `akun` (`id`, `no_akun`, `nama`) VALUES
 (34, 70100, 'Pendapatan Bunga'),
 (35, 70200, 'Laba Selisih Kurs'),
 (36, 80000, 'Biaya Lain-lain / Other Expense'),
-(37, 80100, 'Biaya Administrasi dan Bunga');
+(37, 80100, 'Biaya Administrasi dan Bunga'),
+(38, 50100, 'Beban Gaji');
 
 -- --------------------------------------------------------
 
@@ -111,14 +112,6 @@ CREATE TABLE `jurnalpembelian` (
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0:belum lunas, 1:lunas'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `jurnalpembelian`
---
-
-INSERT INTO `jurnalpembelian` (`id`, `tgl_pembelian`, `no_akun`, `no_akun2`, `nama_akun`, `nama_akun2`, `saldo`, `jenis`, `supplier_id`, `no_faktur`, `barang`, `status`) VALUES
-(3, '2022-01-03', 10100, 20101, 'Aktiva Lancar', 'Hutang Dagang', 5000000, 'Debit', 3, 1212, 2, 1),
-(4, '2022-01-05', 10100, 20101, 'Aktiva Lancar', 'Hutang Dagang', 500000, 'Debit', 2, 344, 1, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -144,9 +137,8 @@ CREATE TABLE `jurnalumum` (
 --
 
 INSERT INTO `jurnalumum` (`id`, `kode_jurnal`, `tgl_pembelian`, `jurnal`, `no_akun`, `akun_debit`, `total_debit`, `no_kredit`, `akun_kredit`, `total_kredit`, `keterangan`) VALUES
-(3, 'BELI3', '2022-01-03', 'Pembelian', 110401, 'Persediaan', 5000000, 20101, 'Hutang Dagang', 5000000, 'Pembelian dari Samsung'),
-(5, 'KELUARKAS5', '2022-01-06', 'Pengeluaran Kas', 20101, 'Hutang Dagang', 5000000, 10101, 'Kas', 5000000, 'Pembayaran No Faktur 1212'),
-(7, 'MASUKKAS4', '2022-01-05', 'Penerimaan Kas', 10101, 'Kas', 2000000, 10102, 'Piutang Dagang', 2000000, 'Pembayaran No Faktur 6643');
+(10, 'KELUARKAS6', '2022-02-25', 'Pengeluaran Kas', 60200, 'Biaya OperasionalÂ ', 300000, 10101, 'Kas', 300000, ''),
+(25, 'MASUKKAS21', '2022-02-25', 'Penerimaan Kas', 10101, 'Kas', 5000000, 20200, 'Hutang Jangka Panjang', 5000000, 'Penerimaan Kas');
 
 -- --------------------------------------------------------
 
@@ -172,7 +164,7 @@ CREATE TABLE `jurnal_kas` (
 --
 
 INSERT INTO `jurnal_kas` (`id`, `tgl_penerimaan`, `no_akun`, `nama_akun`, `no_akun2`, `nama_akun2`, `pelanggan`, `no_faktur`, `saldo`, `jenis`) VALUES
-(4, '2022-01-05', 10101, 'Kas', 10102, 'Piutang Dagang', 2, '6643', 2000000, 'Kredit');
+(21, '2022-02-25', 10101, 'Kas', 20200, 'Hutang Jangka Panjang', 2, '311', 5000000, 'Debit');
 
 -- --------------------------------------------------------
 
@@ -196,7 +188,7 @@ CREATE TABLE `jurnal_pengeluaran_kas` (
 --
 
 INSERT INTO `jurnal_pengeluaran_kas` (`id`, `tgl_pengeluaran`, `no_akun`, `nama_akun`, `no_akun2`, `nama_akun2`, `saldo`, `jenis`) VALUES
-(5, '2022-01-06', 20101, 'Hutang Dagang', 10101, 'Kas', 5000000, 'Kredit');
+(6, '2022-02-25', 60200, 'Biaya OperasionalÂ ', 10101, 'Kas', 300000, 'Debit');
 
 -- --------------------------------------------------------
 
@@ -234,12 +226,28 @@ CREATE TABLE `jurnal_penjualan` (
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0:belum lunas; 1:lunas'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data untuk tabel `jurnal_penjualan`
+-- Struktur dari tabel `neraca`
 --
 
-INSERT INTO `jurnal_penjualan` (`id`, `tgl_penjualan`, `no_akun`, `nama_akun`, `no_akun2`, `nama_akun2`, `pelanggan`, `barang`, `saldo`, `jenis`, `no_faktur`, `status`) VALUES
-(3, '2022-01-04', 10102, 'Piutang Dagang', 40100, 'Penjualan', 2, 1, 2000000, 'Debit', '6643', 1);
+CREATE TABLE `neraca` (
+  `id` int NOT NULL,
+  `kode_jurnal` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `no_akun` int NOT NULL,
+  `akun` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `saldo` int NOT NULL,
+  `jenis_akun` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `neraca`
+--
+
+INSERT INTO `neraca` (`id`, `kode_jurnal`, `no_akun`, `akun`, `saldo`, `jenis_akun`) VALUES
+(1, 'MASUKKAS21', 10101, 'Kas', 5000000, 0),
+(2, 'MASUKKAS21', 20200, 'Hutang Jangka Panjang', 5000000, 1);
 
 -- --------------------------------------------------------
 
@@ -359,6 +367,12 @@ ALTER TABLE `jurnal_penjualan`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `neraca`
+--
+ALTER TABLE `neraca`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
@@ -384,13 +398,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `akun`
 --
 ALTER TABLE `akun`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT untuk tabel `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `jurnalpembelian`
@@ -402,31 +416,37 @@ ALTER TABLE `jurnalpembelian`
 -- AUTO_INCREMENT untuk tabel `jurnalumum`
 --
 ALTER TABLE `jurnalumum`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT untuk tabel `jurnal_kas`
 --
 ALTER TABLE `jurnal_kas`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `jurnal_pengeluaran_kas`
 --
 ALTER TABLE `jurnal_pengeluaran_kas`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `jurnal_penggajian`
 --
 ALTER TABLE `jurnal_penggajian`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `jurnal_penjualan`
 --
 ALTER TABLE `jurnal_penjualan`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `neraca`
+--
+ALTER TABLE `neraca`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
