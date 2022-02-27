@@ -67,6 +67,92 @@
                 // }
             }
 
+            //neraca activa
+            if(substr($nomorAkun,0,-4) == 1){
+                $sql_neraca = mysqli_query($koneksi, "SELECT * FROM neraca WHERE no_akun = $nomorAkun");
+                $cek_neraca = mysqli_num_rows($sql_neraca);
+                if($cek_neraca > 0){
+                    $row = mysqli_fetch_object($sql_neraca);
+                    $saldo1 = $row->saldo + $saldo;
+
+                    $update = mysqli_query($koneksi, "UPDATE neraca SET saldo = $saldo1 WHERE no_akun = $nomorAkun");
+                }else{
+                    $insert = mysqli_query($koneksi, "INSERT INTO neraca(kode_jurnal, no_akun, akun, saldo, jenis_akun)
+                                VALUES ('$kode_jurnal','$nomorAkun','$name','$saldo',0)");
+                }
+            }
+
+            if(substr($nomorAkun2,0,-4) == 1){
+                $sql_neraca = mysqli_query($koneksi, "SELECT * FROM neraca WHERE no_akun = $nomorAkun2");
+                $cek_neraca = mysqli_num_rows($sql_neraca);
+                if($cek_neraca > 0){
+                    $row = mysqli_fetch_object($sql_neraca);
+                    $saldo1 = $row->saldo - $saldo;
+
+                    $update = mysqli_query($koneksi, "UPDATE neraca SET saldo = $saldo1 WHERE no_akun = $nomorAkun2");
+                }else{
+                    $insert = mysqli_query($koneksi, "INSERT INTO neraca(kode_jurnal, no_akun, akun, saldo, jenis_akun)
+                                VALUES ('$kode_jurnal','$nomorAkun2','$name2','$saldo',0)");
+                }
+            }
+
+            //neraca pasiva
+            if(substr($nomorAkun,0,-4) == 2){
+                $sql_neraca = mysqli_query($koneksi, "SELECT * FROM neraca WHERE no_akun = $nomorAkun");
+                $cek_neraca = mysqli_num_rows($sql_neraca);
+                if($cek_neraca > 0){
+                    $row = mysqli_fetch_object($sql_neraca);
+                    $saldo1 = $row->saldo + $saldo;
+
+                    $update = mysqli_query($koneksi, "UPDATE neraca SET saldo = $saldo1 WHERE no_akun = $nomorAkun");
+                }else{
+                    $insert = mysqli_query($koneksi, "INSERT INTO neraca(kode_jurnal, no_akun, akun, saldo, jenis_akun)
+                                VALUES ('$kode_jurnal','$nomorAkun','$name','$saldo',1)");
+                }
+            }
+
+            if(substr($nomorAkun2,0,-4) == 2){
+                $sql_neraca = mysqli_query($koneksi, "SELECT * FROM neraca WHERE no_akun = $nomorAkun2");
+                $cek_neraca = mysqli_num_rows($sql_neraca);
+                if($cek_neraca > 0){
+                    $row = mysqli_fetch_object($sql_neraca);
+                    $saldo1 = $row->saldo - $saldo;
+
+                    $update = mysqli_query($koneksi, "UPDATE neraca SET saldo = $saldo1 WHERE no_akun = $nomorAkun2");
+                }else{
+                    $insert = mysqli_query($koneksi, "INSERT INTO neraca(kode_jurnal, no_akun, akun, saldo, jenis_akun)
+                                VALUES ('$kode_jurnal','$nomorAkun2','$name2','$saldo',1)");
+                }
+            }
+
+            if(substr($nomorAkun,0,-4) == 3){
+                $sql_neraca = mysqli_query($koneksi, "SELECT * FROM neraca WHERE no_akun = $nomorAkun");
+                $cek_neraca = mysqli_num_rows($sql_neraca);
+                if($cek_neraca > 0){
+                    $row = mysqli_fetch_object($sql_neraca);
+                    $saldo1 = $row->saldo + $saldo;
+
+                    $update = mysqli_query($koneksi, "UPDATE neraca SET saldo = $saldo1 WHERE no_akun = $nomorAkun");
+                }else{
+                    $insert = mysqli_query($koneksi, "INSERT INTO neraca(kode_jurnal, no_akun, akun, saldo, jenis_akun)
+                                VALUES ('$kode_jurnal','$nomorAkun','$name','$saldo',1)");
+                }
+            }
+
+            if(substr($nomorAkun2,0,-4) == 3){
+                $sql_neraca = mysqli_query($koneksi, "SELECT * FROM neraca WHERE no_akun = $nomorAkun2");
+                $cek_neraca = mysqli_num_rows($sql_neraca);
+                if($cek_neraca > 0){
+                    $row = mysqli_fetch_object($sql_neraca);
+                    $saldo1 = $row->saldo - $saldo;
+
+                    $update = mysqli_query($koneksi, "UPDATE neraca SET saldo = $saldo1 WHERE no_akun = $nomorAkun2");
+                }else{
+                    $insert = mysqli_query($koneksi, "INSERT INTO neraca(kode_jurnal, no_akun, akun, saldo, jenis_akun)
+                                VALUES ('$kode_jurnal','$nomorAkun2','$name2','$saldo',1)");
+                }
+            }
+
             if($sql==true){
                 echo "<script type=\"text/javascript\">window.location.href = '?menu=jurnalpenjualan';</script>";
             }else{
