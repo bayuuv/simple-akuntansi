@@ -10,16 +10,16 @@
                             <table class="table table-striped">
                                 <?php
                                 $arr40[] = 0;
-                                $sql = mysqli_query($koneksi, "SELECT * FROM jurnalumum where LEFT(no_akun, 2) = 40 order by no_akun ASC") or die(mysqli_error());
+                                $sql = mysqli_query($koneksi, "SELECT * FROM jurnalumum where LEFT(no_kredit, 2) = 40 or LEFT(no_kredit, 2) = 70 GROUP BY no_kredit order by no_kredit ASC") or die(mysqli_error());
                             
                                 while ($data = mysqli_fetch_array($sql)){
-                                    $total_debit = "Rp " . number_format($data["total_debit"],2,',','.');
-                                    $arr40[] = $data["total_debit"];
+                                    $total_kredit = "Rp " . number_format($data["total_kredit"],2,',','.');
+                                    $arr40[] = $data["total_kredit"];
 
                                     echo"
                                         <tr>
-                                            <td>$data[akun_debit]</td>
-                                            <td>$total_debit</td>
+                                            <td>$data[akun_kredit]</td>
+                                            <td>$total_kredit</td>
                                     </tr>";
                                 };
                                 if($arr40 > 0){
@@ -30,16 +30,16 @@
                                 ?>
                                 <?php
                                 $arr50[] = 0;
-                                $sql = mysqli_query($koneksi, "SELECT * FROM jurnalumum where LEFT(no_akun, 2) = 50 or LEFT(no_akun, 2) = 60 or LEFT(no_akun, 2) = 70 or LEFT(no_akun, 2) = 80 order by no_akun ASC") or die(mysqli_error());
+                                $sql = mysqli_query($koneksi, "SELECT * FROM jurnalumum where LEFT(no_akun, 2) = 50 or LEFT(no_akun, 2) = 60 or LEFT(no_akun, 2) = 80 GROUP BY no_akun order by no_akun ASC") or die(mysqli_error());
                             
                                 while ($data = mysqli_fetch_array($sql)){
-                                    $total_kredit = "Rp " . number_format($data["total_kredit"],2,',','.');
-                                    $arr50[] = $data["total_kredit"];
+                                    $total_debit = "Rp " . number_format($data["total_debit"],2,',','.');
+                                    $arr50[] = $data["total_debit"];
 
                                     echo"
                                         <tr>
-                                            <td>$data[akun_kredit]</td>
-                                            <td>$total_kredit</td>
+                                            <td>$data[akun_debit]</td>
+                                            <td>$total_debit</td>
                                     </tr>";
                                 };
                                 if($arr50 > 0){

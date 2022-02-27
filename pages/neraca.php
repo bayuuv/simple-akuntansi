@@ -14,12 +14,11 @@
                                 </tr>
                                 <?php
                                 $arr10[] = 0;
-                                $sql = mysqli_query($koneksi, "SELECT * FROM jurnalumum where LEFT(no_akun, 2) = 10 or LEFT(no_akun, 2) = 11 order by no_akun ASC") or die(mysqli_error());
+                                $sql = mysqli_query($koneksi, "SELECT *, SUM(total_debit) as total FROM jurnalumum where LEFT(no_akun, 2) = 10 or LEFT(no_akun, 2) = 11 GROUP BY no_akun order by no_akun ASC") or die(mysqli_error());
                             
                                 while ($data = mysqli_fetch_array($sql)){
-                                    $total_debit = "Rp " . number_format($data["total_debit"],2,',','.');
-                                    $arr10[] = $data["total_debit"];
-
+                                    $total_debit = "Rp " . number_format($data["total"],2,',','.');
+                                    $arr10[] = $data["total"];
                                     echo"
                                         <tr>
                                             <td>$data[akun_debit]</td>
@@ -67,11 +66,12 @@
                                 </tr>
                                 <?php
                                 $arr20[] = 0;
-                                $sql = mysqli_query($koneksi, "SELECT * FROM jurnalumum where LEFT(no_kredit, 2) = 20 or LEFT(no_kredit, 2) = 30 order by no_akun ASC") or die(mysqli_error());
+                                //$sql = mysqli_query($koneksi, "SELECT * FROM jurnalumum where LEFT(no_kredit, 2) = 20 or LEFT(no_kredit, 2) = 30 order by no_akun ASC") or die(mysqli_error());
+                                $sql = mysqli_query($koneksi, "SELECT *, SUM(total_kredit) as total FROM jurnalumum where LEFT(no_kredit, 2) = 20 or LEFT(no_kredit, 2) = 30 GROUP BY no_kredit order by no_kredit ASC") or die(mysqli_error());
                             
                                 while ($data = mysqli_fetch_array($sql)){
-                                    $total_kredit = "Rp " . number_format($data["total_kredit"],2,',','.');
-                                    $arr20[] = $data["total_kredit"];
+                                    $total_kredit = "Rp " . number_format($data["total"],2,',','.');
+                                    $arr20[] = $data["total"];
 
                                     echo"
                                         <tr>

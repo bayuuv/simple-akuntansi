@@ -37,6 +37,7 @@
         }else{
             $jenis = "Debit";
             $temp  = "KAS";
+            $keterangan = "Penerimaan Kas";
         }
         //$temp           = "KAS";
 		$jPenerimaan    = "Penerimaan Kas";
