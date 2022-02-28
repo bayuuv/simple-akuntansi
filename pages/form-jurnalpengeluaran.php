@@ -19,6 +19,8 @@
         $tgl_pengeluaran = $data["tgl_pengeluaran"];
         $no_akun        = $data["no_akun"];
         $nama_akun      = $data["nama_akun"];
+        $no_akun2        = $data["no_akun2"];
+        $nama_akun2      = $data["nama_akun2"];
         $jenis          = $data["jenis"];
         $saldo          = "Rp " . number_format($data["saldo"],2,',','.');
     };
@@ -53,7 +55,7 @@
 
             if($id){
                 $sql = mysqli_query($koneksi, "UPDATE jurnal_pengeluaran_kas SET tgl_pengeluaran = '$tgl', no_akun = '$nomorAkun', nama_akun = '$name', saldo = '$saldo', jenis = '$jenis' WHERE id = '$id'");
-                $kode_jurnal = "KELUARKAS$id";
+                $kode_jurnal = "KELUAR$id";
                 if ($jenis == "Debit"){
 
                     $sql_umum = mysqli_query($koneksi, "UPDATE jurnalumum SET tgl_pembelian = '$tgl', jurnal = '$jPengeluaran', no_akun = '$nomorAkun', akun_debit = '$name', total_debit = '$saldo', no_kredit = '$nomorAkun2', akun_kredit = '$name2', total_kredit = '$saldo' WHERE kode_jurnal = '$kode_jurnal'");
@@ -70,7 +72,7 @@
                 VALUES ('$tgl','$nomorAkun','$name','$nomorAkun2','$name2','$saldo','$jenis')");
 
                 $last_id = mysqli_insert_id($koneksi);
-                $kode_jurnal = "KELUARKAS$last_id";
+                $kode_jurnal = "KELUAR$last_id";
 
                 if ($jenis == "Debit") {
                     

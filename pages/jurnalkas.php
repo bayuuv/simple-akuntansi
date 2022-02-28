@@ -7,15 +7,24 @@
     $row = mysqli_fetch_object($sql);
     if(substr($row->no_akun,0,-4) == 1){
         $no_akun = $row->no_akun;
+
+        $sqlneraca = mysqli_query($koneksi, "SELECT * FROM neraca WHERE no_akun = '$no_akun'") or die(mysqli_error());
+        $row1 = mysqli_fetch_object($sqlneraca);
+
+        $saldo1 = $row1->saldo - $row->saldo;
+        $update = mysqli_query($koneksi, "UPDATE neraca SET saldo = $saldo1 WHERE no_akun = $no_akun");
+
     }else{
         $no_akun = $row->no_akun2;
+
+        $sqlneraca = mysqli_query($koneksi, "SELECT * FROM neraca WHERE no_akun = '$no_akun'") or die(mysqli_error());
+        $row1 = mysqli_fetch_object($sqlneraca);
+
+        $saldo1 = $row1->saldo + $row->saldo;
+        $update = mysqli_query($koneksi, "UPDATE neraca SET saldo = $saldo1 WHERE no_akun = $no_akun");
+
     }
-    $sqlneraca = mysqli_query($koneksi, "SELECT * FROM neraca WHERE no_akun = '$no_akun'") or die(mysqli_error());
-    $row1 = mysqli_fetch_object($sqlneraca);
-
-    $saldo1 = $row1->saldo - $row->saldo;
-    $update = mysqli_query($koneksi, "UPDATE neraca SET saldo = $saldo1 WHERE no_akun = $no_akun");
-
+    
     $hasil = mysqli_query($koneksi, "DELETE FROM jurnal_kas WHERE id = '$idt'") or die(mysqli_error());
     $kode_jurnal = "MASUKKAS$idt";
     mysqli_query($koneksi, "DELETE FROM jurnalumum WHERE kode_jurnal = '$kode_jurnal'") or die(mysqli_error());
