@@ -35,6 +35,12 @@ $tgl2 = $_POST['tanggal2'] ?? '';
                                 <button type="submit" name="submit" class="btn btn-primary mb-2 mr-sm-2">Submit</button> 
                         </form>
                         <br>
+                        <?php if($akun){ ?>
+                        <a href="cetak-bukubesar.phpakun=<?php $akun ?>&tgl=<?php $tgl1 ?>&$tgl2<?php $tgl2 ?>" target="_blank">Cetak</a>
+                        <?php }else{ ?>
+                        <a href="cetak-bukubesar.php" target="_blank">Cetak</a>
+                        <?php } ?>
+                        <br><br>
                         <div class="row">
                         <div class="col-md-6">
                             <div class="table-responsive">
